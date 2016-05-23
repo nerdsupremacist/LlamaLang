@@ -4,6 +4,12 @@ This is a Programming Language I'm defining since I wanted to try out Python and
 
 So far it's really simple:
 
+Datatypes:
+
+Number (float or int)
+String
+Function
+
 Define a variable:
 
 ```

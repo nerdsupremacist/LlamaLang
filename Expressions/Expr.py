@@ -9,3 +9,6 @@ class Expr(object):
 
     def type(self):
         return Expr
+
+    def print(self):
+        return self.eval()

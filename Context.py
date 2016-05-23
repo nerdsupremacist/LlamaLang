@@ -18,7 +18,7 @@ class Context(object):
                 raise Exception("Type Error! " + name + " cannot conform to " + expr.type())
         else:
             self.types[name] = ex.type()
-            self.values[name] = ex.eval()
+            self.values[name] = ex
 
     def typeForVar(self, name):
         if name in self.types.keys():

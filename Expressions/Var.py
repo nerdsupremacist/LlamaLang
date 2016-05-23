@@ -14,4 +14,7 @@ class Var(Expr):
         self.context.setValueForVar(self.name, value)
 
     def eval(self):
-        return self.context.valueForVar(self.name)
+        return self.context.valueForVar(self.name).eval()
+
+    def print(self):
+        return self.name + ": " + str(self.type().data()) + " = " + str(self.eval())

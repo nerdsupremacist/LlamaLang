@@ -1,6 +1,8 @@
 from Expressions.Number import Number
 from Expressions.Operations.Plus import Plus
 from Expressions.Operations.Minus import Minus
+from Expressions.Operations.Times import Times
+from Expressions.Operations.Division import Division
 from Expressions.Var import Var
 from Expressions.String import String
 
@@ -138,6 +140,16 @@ class Interpreter(object):
                     last = self.eaten.pop()
                     current = op(last, current)
                 continue
+            if self.current_char == '*':
+                self.advance()
+                self.eat(current)
+                self.eatBinaryOp(Times)
+                continue
+            if self.current_char == '/':
+                self.advance()
+                self.eat(current)
+                self.eatBinaryOp(Division)
+                continue
             if self.current_char == '+':
                 self.advance()
                 self.eat(current)
@@ -177,4 +189,4 @@ class Interpreter(object):
         return current
 
     def result(self):
-        return self.parse().eval()
+        return self.parse().print()

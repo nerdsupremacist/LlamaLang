@@ -11,3 +11,10 @@ class Number(Expr):
 
     def type(self):
         return Number
+
+    def print(self):
+        return "Number: " + str(self.eval())
+
+    @staticmethod
+    def data():
+        return "Number"

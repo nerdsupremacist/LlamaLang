@@ -9,3 +9,10 @@ class String(Expr):
 
     def type(self):
         return String
+
+    def print(self):
+        return "String: \"" + self.eval() + "\""
+
+    @staticmethod
+    def data():
+        return "String"

@@ -6,12 +6,12 @@ So far it's really simple:
 
 Define a variable:
 
-'''
+```
 let var = "My Variable"
-'''
+```
 
 Define a function
 
-'''
+```
 let square = x -> x * x
-'''
+```

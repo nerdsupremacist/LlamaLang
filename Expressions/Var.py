@@ -13,8 +13,11 @@ class Var(Expr):
     def set(self, value):
         self.context.setValueForVar(self.name, value)
 
-    def eval(self):
-        return self.context.valueForVar(self.name).eval()
+    def get(self):
+        return self.context.valueForVar(self.name)
 
-    def print(self):
-        return self.name + ": " + str(self.type().data()) + " = " + str(self.eval())
+    def eval(self):
+        return self.get().eval()
+
+    def to_cli(self):
+        return self.name + ": " + " = " + self.get().to_cli()

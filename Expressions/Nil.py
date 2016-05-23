@@ -3,12 +3,12 @@ from Expressions.Expr import Expr
 class Nil(Expr):
 
     def __init__(self):
-        return
+        self.text = "nil"
 
     def eval(self):
         raise Exception("Unsafe unwrapping of nil")
 
-    def print(self):
+    def to_cli(self):
         return "nil"
 
     @staticmethod

@@ -2,7 +2,7 @@ from Expressions.Expr import Expr
 
 
 class Number(Expr):
-    
+
     def __init__(self, value):
         self.value = value
 
@@ -12,8 +12,8 @@ class Number(Expr):
     def type(self):
         return Number
 
-    def print(self):
-        return "Number: " + str(self.eval())
+    def to_cli(self):
+        return str(self.eval()) + " (Number)"
 
     @staticmethod
     def data():

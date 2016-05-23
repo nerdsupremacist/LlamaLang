@@ -4,7 +4,7 @@ class OptionalVar(Var):
     def __init__(self, name, context):
         super(name, context)
 
-    def print(self):
+    def to_cli(self):
         return self.name + ": " + str(self.type()) + "? = " + str(self.eval())
 
     # TODO: Implement Optionals

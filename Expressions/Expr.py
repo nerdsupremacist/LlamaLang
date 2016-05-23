@@ -10,5 +10,5 @@ class Expr(object):
     def type(self):
         return Expr
 
-    def print(self):
+    def to_cli(self):
         return self.eval()

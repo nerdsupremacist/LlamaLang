@@ -10,8 +10,8 @@ class String(Expr):
     def type(self):
         return String
 
-    def print(self):
-        return "String: \"" + self.eval() + "\""
+    def to_cli(self):
+        return "\"" + self.eval() + "\"" + " (String)"
 
     @staticmethod
     def data():

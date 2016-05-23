@@ -10,13 +10,13 @@ So far it's really simple:
 * String
 * Function
 
-Define a variable:
+#### Define a variable:
 
 ```
 let var = "My Variable"
 ```
 
-Define a function
+#### Define a function
 
 ```
 let square = x -> x * x
@@ -28,7 +28,7 @@ Functions are obviously First Class Citizens:
 let redundant = f x -> f (f (f x))
 ```
 
-Mathematical Operations Supported:
+#### Mathematical Operations Supported:
 
 ```
 let a = 1

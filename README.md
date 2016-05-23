@@ -15,3 +15,22 @@ Define a function
 ```
 let square = x -> x * x
 ```
+
+Functions are obviously First Class Citizens:
+
+```
+let redundant = f x -> f (f (f x))
+```
+
+Mathematical Operations Supported:
+
+```
+let a = 1
+let b = 2
+
+a + b
+a - b
+a * b
+a / b
+a ** b
+```

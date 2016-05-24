@@ -19,6 +19,18 @@ let myNumber = 42
 let isLlamaAwesome = true
 ```
 
+#### Write a Comment:
+
+Llama only allows for one line comments
+
+```
+
+// This is a comment
+
+let myVar = 42 // This is an inline Comment
+
+```
+
 #### Define a function
 
 ```

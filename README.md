@@ -3,8 +3,11 @@
 # Llama Programming Language
 Repository for the Llama Programming Language.
 This is a Programming Language I'm defining since I wanted to try out Python and always wanted to make one. ;)
+
 It's still a work in progress.
-For any cool ideas just make an issue and feel free to fork this project.
+For any cool ideas just make an issue and feel free to fork this project and work on it as you like.
+
+As soon as I'm done with the Interpreter I will probably get a few friends and write a full compiler.
 
 So far it's really simple:
 

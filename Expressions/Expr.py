@@ -10,5 +10,12 @@ class Expr(object):
     def type(self):
         return Expr
 
+    def copy(self):
+        return self
+
     def to_cli(self):
         return self.eval()
+
+    @staticmethod
+    def data():
+        return "Unknown"

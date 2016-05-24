@@ -15,7 +15,8 @@ class Context(AbstractContext):
 
     def valueForVar(self, name):
         if name in self.types.keys():
-            return self.values[name]
+            value = self.values[name]
+            return value.copy()
         else:
             raise Exception("Unknown Variable " + name)
         

@@ -10,6 +10,9 @@ class String(Expr):
     def type(self):
         return String
 
+    def copy(self):
+        return String(self.text)
+
     def to_cli(self):
         return "\"" + self.eval() + "\"" + " (String)"
 

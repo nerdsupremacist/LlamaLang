@@ -12,6 +12,9 @@ class Number(Expr):
     def type(self):
         return Number
 
+    def copy(self):
+        return Number(self.value)
+
     def to_cli(self):
         return str(self.eval()) + " (Number)"
 

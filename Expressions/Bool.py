@@ -10,6 +10,9 @@ class Bool(Expr):
     def type(self):
         return Bool
 
+    def copy(self):
+        return Bool(self.value)
+
     def to_cli(self):
         if self.eval():
             return "true (Bool)"

@@ -89,7 +89,7 @@ class Interpreter(object):
         for i in range(len(str)):
             char = str[i]
             if self.current_char != char:
-                for j in range(i-1):
+                for j in range(i):
                     self.go_back()
                 return False
             self.advance()
@@ -144,7 +144,9 @@ class Interpreter(object):
 
     def eat(self, item):
         type = item.type()
-        if not (type == None) and type == Function and len(self.funcs) < 1:
+        if isinstance(item, Function) and len(self.funcs) < 1:
+            self.funcs.append(item)
+        elif not (type == None) and type == Function and len(self.funcs) < 1:
             self.funcs.append(item.get())
         else:
             self.eaten.append(item)
@@ -234,10 +236,11 @@ class Interpreter(object):
                 current = self.parse_loop(current)
         except Exception as e:
             current = ExceptionClass(e)
+
         if len(self.funcs) > 0:
             params = [current]
             while len(self.eaten) > 0:
-                params = [self.eaten.pop()] + params
+                params.append(self.eaten.pop())
             current = self.funcs.pop()
             current.apply(params)
         return current

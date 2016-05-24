@@ -1,3 +1,4 @@
+from Expressions.Var import Var
 from Expressions.Expr import Expr
 from Context import Context
 import Interpreter
@@ -18,10 +19,13 @@ class Function(Expr):
 
     def eval(self):
         self.context = Context(self.get_parent_context())
-        if len(self.parameters) != len(self.parameters):
+        if len(self.parameters) != len(self.applied):
             raise Exception("Invalid Not All Parameters Applied.")
         for i in range(len(self.parameters)):
-            self.context.setValueForVar(self.parameters[i], self.applied[i])
+            if isinstance(self.applied[i], Var):
+                self.context.setValueForVar(self.parameters[i], self.applied[i].get())
+            else:
+                self.context.setValueForVar(self.parameters[i], self.applied[i])
         inter = Interpreter.Interpreter(self.context, self.code)
         self.applied = []
         return inter.parse().eval()
@@ -32,12 +36,24 @@ class Function(Expr):
         return Function
 
     def outputType(self):
-        interpreter = Interpreter.Interpreter(self.context, self.code)
-        result = interpreter.parse()
-        return result.type()
+        try:
+            interpreter = Interpreter.Interpreter(self.context, self.code)
+            result = interpreter.parse()
+            type = result.type()
+            if type == None:
+                return Expr
+            return type
+        except Exception as e:
+            return Expr
 
-    def data(self):
+    @staticmethod
+    def data():
         return "Function: "
+
+    def copy(self):
+        f = Function(self.parameters, self.context.parent_context, self.code)
+        f.applied = self.applied
+        return f
 
     def to_cli(self):
         if len(self.applied) > 0:

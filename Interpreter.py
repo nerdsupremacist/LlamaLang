@@ -7,6 +7,7 @@ from Expressions.Operations.Function import Function
 from Expressions.Var import Var
 from Expressions.String import String
 from Expressions.Nil import Nil
+from Expressions.Exception import ExceptionClass
 
 class Interpreter(object):
 
@@ -137,9 +138,7 @@ class Interpreter(object):
 
     def eat(self, item):
         type = item.type()
-        if isinstance(item, Function):
-            self.funcs.append(item)
-        elif not (type == None) and type == Function:
+        if not (type == None) and type == Function and len(self.funcs) < 1:
             self.funcs.append(item.get())
         else:
             self.eaten.append(item)
@@ -155,62 +154,58 @@ class Interpreter(object):
             return current
         return None
 
+    def parse_loop(self, current):
+        if self.current_char.isspace():
+            self.skip_whitespace()
+        if isinstance(current, Var) or isinstance(current, Number) or isinstance(current, String):
+            self.eat(current)
+        elif isinstance(current, Function):
+            self.eat(current)
+        if self.advance_string("->"):
+            item = self.function()
+            if isinstance(item, Function):
+                current = item
+        elif self.current_char.isdigit():
+            current = self.integer()
+            if len(self.ops) > 0 and len(self.eaten) > 0:
+                op = self.ops.pop()
+                last = self.eaten.pop()
+                current = op(last, current)
+        elif self.advance_string("*"):
+            self.eatBinaryOp(Times)
+        elif self.advance_string("/"):
+            self.eatBinaryOp(Division)
+        elif self.advance_string("+"):
+            self.eatBinaryOp(Plus)
+        elif self.advance_string("-"):
+            self.eatBinaryOp(Minus)
+        elif self.current_char == '(':
+            current = self.brackets()
+            popped = self.popBinaryOp(current)
+            if not popped == None:
+                current = popped
+        elif self.advance_string("let"):
+            item = self.var_declaration()
+            current = item
+        elif self.current_char == '"':
+            current = self.string()
+            popped = self.popBinaryOp(current)
+            if not popped == None:
+                current = popped
+        else:
+            current = self.var()
+            popped = self.popBinaryOp(current)
+            if not popped == None:
+                current = popped
+        return current
+
     def parse(self):
         current = Nil()
-        while self.current_char is not None:
-            if self.current_char.isspace():
-                self.skip_whitespace()
-                continue
-            if isinstance(current, Var) or isinstance(current, Number) or isinstance(current, String):
-                self.eat(current)
-            elif isinstance(current, Function):
-                self.eat(current)
-            if self.advance_string("->"):
-                item = self.function()
-                if isinstance(item, Function):
-                    current = item
-                continue
-            if self.current_char.isdigit():
-                current = self.integer()
-                if len(self.ops) > 0 and len(self.eaten) > 0:
-                    op = self.ops.pop()
-                    last = self.eaten.pop()
-                    current = op(last, current)
-                continue
-            if self.advance_string("*"):
-                self.eatBinaryOp(Times)
-                continue
-            if self.advance_string("/"):
-                self.eatBinaryOp(Division)
-                continue
-            if self.advance_string("+"):
-                self.eatBinaryOp(Plus)
-                continue
-            if self.advance_string("-"):
-                self.eatBinaryOp(Minus)
-                continue
-            if self.current_char == '(':
-                current = self.brackets()
-                popped = self.popBinaryOp(current)
-                if not popped == None:
-                    current = popped
-                continue
-            if self.advance_string("let"):
-                item = self.var_declaration()
-                current = item
-                continue
-            if self.current_char == '"':
-                current = self.string()
-                popped = self.popBinaryOp(current)
-                if not popped == None:
-                    current = popped
-                continue
-            else:
-                current = self.var()
-                popped = self.popBinaryOp(current)
-                if not popped == None:
-                    current = popped
-                continue
+        try:
+            while self.current_char is not None:
+                current = self.parse_loop(current)
+        except Exception as e:
+            current = ExceptionClass(e)
         if len(self.funcs) > 0:
             params = [current]
             while len(self.eaten) > 0:
@@ -221,4 +216,7 @@ class Interpreter(object):
 
     def result(self):
         item = self.parse()
-        return item.to_cli()
+        try:
+            return item.to_cli()
+        except Exception as e:
+            return ExceptionClass(e).to_cli()

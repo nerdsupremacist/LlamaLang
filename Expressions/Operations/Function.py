@@ -27,7 +27,14 @@ class Function(Expr):
         return inter.parse().eval()
 
     def type(self):
+        if len(self.applied) > 0:
+            return self.outputType()
         return Function
+
+    def outputType(self):
+        interpreter = Interpreter.Interpreter(self.context, self.code)
+        result = interpreter.parse()
+        return result.type()
 
     def data(self):
         return "Function: "
@@ -35,5 +42,4 @@ class Function(Expr):
     def to_cli(self):
         if len(self.applied) > 0:
             return str(self.eval())
-        return str(self.parameters) + " -> ()"
-
+        return "Function " + str(self.parameters) + " -> " + self.outputType().data()

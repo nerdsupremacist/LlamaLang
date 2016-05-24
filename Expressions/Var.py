@@ -1,6 +1,5 @@
 from Expressions.Expr import Expr
 
-
 class Var(Expr):
 
     def __init__(self, name, context):
@@ -20,4 +19,4 @@ class Var(Expr):
         return self.get().eval()
 
     def to_cli(self):
-        return self.name + ": " + " = " + self.get().to_cli()
+        return self.name + " = " + self.get().to_cli()

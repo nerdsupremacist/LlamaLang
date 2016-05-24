@@ -60,6 +60,22 @@ let hello = "Hello"
 redundant yell hello // "Hello!!!"
 ```
 
+#### Control
+
+To take decisions you can use if then else and recursion to create very complex programs
+
+For instance take this small function to calculate the n Factorial:
+
+```
+let fac = n ->
+  if n = 0 then
+    0
+  else
+    n * (fac (n-1))
+```
+
+*Note: Our Interpreter can only take one line at the time for now.*
+
 #### Mathematical Operations Supported:
 
 ```
@@ -79,7 +95,7 @@ a ** b // Stands for a^b
 let a = 5
 let b = 4
 
-a == b // false
+a = b // false (That's right a single one)
 a != b // true
 ```
 

@@ -1,6 +1,10 @@
-# LlamaLang
+![alt text](https://raw.githubusercontent.com/mathiasquintero/LlamaLang/master/logo.png "Small logo I made while I had time ;)")
+
+# Llama Programming Language
 Repository for the Llama Programming Language.
 This is a Programming Language I'm defining since I wanted to try out Python and always wanted to make one. ;)
+It's still a work in progress.
+For any cool ideas just make an issue and feel free to fork this project.
 
 So far it's really simple:
 

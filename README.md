@@ -50,7 +50,7 @@ let redundant = f x -> f (f (f x))
 let yell = x -> x + "!"
 let hello = "Hello"
 
-redundant (yell) hello // "Hello!!!"
+redundant yell hello // "Hello!!!"
 ```
 
 #### Mathematical Operations Supported:
@@ -63,5 +63,24 @@ a + b
 a - b
 a * b
 a / b
-a ** b
+a ** b // Stands for a^b
+```
+
+#### Compare Data
+
+```
+let a = 5
+let b = 4
+
+a == b // false
+a != b // true
+```
+
+#### Boolean Logic
+
+```
+let a = true
+let b = false
+a & b // false
+a | b // true
 ```

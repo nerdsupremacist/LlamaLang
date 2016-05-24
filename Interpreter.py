@@ -14,6 +14,8 @@ from Expressions.Var import Var
 from Expressions.String import String
 from Expressions.Nil import Nil
 from Expressions.Exception import ExceptionClass
+from Context import Context
+from Expressions.Control.If import IfThenElse
 
 class Interpreter(object):
 
@@ -142,11 +144,30 @@ class Interpreter(object):
         else:
             return Nil
 
+    def ite(self):
+        condition = ''
+        then_block = ''
+        else_block = ''
+        while not self.advance_string("then"):
+            condition += self.current_char
+            self.advance()
+        while not self.advance_string("else"):
+            then_block += self.current_char
+            self.advance()
+        while self.current_char is not None:
+            else_block += self.current_char
+            self.advance()
+        c = Interpreter(self.context, condition).parse()
+        t = Interpreter(Context(self.context), then_block).parse()
+        e = Interpreter(Context(self.context), else_block).parse()
+        return IfThenElse(c, t, e)
+
+
     def eat(self, item):
         type = item.type()
         if isinstance(item, Function) and len(self.funcs) < 1:
             self.funcs.append(item)
-        elif not (type == None) and type == Function and len(self.funcs) < 1:
+        elif type is not None and type is Function and len(self.funcs) < 1:
             self.funcs.append(item.get())
         else:
             self.eaten.append(item)
@@ -165,6 +186,8 @@ class Interpreter(object):
     def parse_loop(self, current):
         if self.current_char.isspace():
             self.skip_whitespace()
+        if self.current_char is None:
+            return current
         if isinstance(current, Var) or isinstance(current, Number) or isinstance(current, String) or isinstance(current, Bool):
             self.eat(current)
         elif isinstance(current, Function):
@@ -191,6 +214,11 @@ class Interpreter(object):
                 op = self.ops.pop()
                 last = self.eaten.pop()
                 current = op(last, current)
+        elif self.advance_string("let"):
+            item = self.var_declaration()
+            current = item
+        elif self.advance_string("if"):
+            current = self.ite()
         elif self.advance_string("**"):
             self.eatBinaryOp(Pow)
         elif self.advance_string("*"):
@@ -205,7 +233,7 @@ class Interpreter(object):
             self.eatBinaryOp(LogicalAnd)
         elif self.advance_string("|"):
             self.eatBinaryOp(LogicalOr)
-        elif self.advance_string("=="):
+        elif self.advance_string("="):
             self.eatBinaryOp(Equals)
         elif self.advance_string("!="):
             self.eatBinaryOp(NotEquals)
@@ -214,9 +242,6 @@ class Interpreter(object):
             popped = self.popBinaryOp(current)
             if not popped == None:
                 current = popped
-        elif self.advance_string("let"):
-            item = self.var_declaration()
-            current = item
         elif self.current_char == '"':
             current = self.string()
             popped = self.popBinaryOp(current)

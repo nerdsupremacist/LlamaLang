@@ -10,4 +10,4 @@ class EmptyContext(AbstractContext):
         raise Exception("Unknown Variable " + name)
 
     def typeForVar(self, name):
-        raise Exception("Unknown Variable " + name)
+        return None

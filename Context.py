@@ -18,14 +18,11 @@ class Context(AbstractContext):
             value = self.values[name]
             return value.copy()
         else:
-            raise Exception("Unknown Variable " + name)
+            return self.parent_context.valueForVar(name)
         
     def setValueForVar(self, name, ex):
         if name in self.values.keys():
-            if self.types[name] == ex.type():
-                self.values[name] = ex.eval()
-            else:
-                raise Exception("Type Error! " + name + " cannot conform to " + ex.type())
+            raise Exception("Variable already set.")
         else:
             self.types[name] = ex.type()
             self.values[name] = ex
@@ -34,4 +31,4 @@ class Context(AbstractContext):
         if name in self.types.keys():
             return self.types[name]
         else:
-            return None
+            return self.parent_context.typeForVar(name)

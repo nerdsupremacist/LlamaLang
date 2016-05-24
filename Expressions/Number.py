@@ -13,7 +13,7 @@ class Number(Expr):
         return Number
 
     def copy(self):
-        return Number(self.value)
+        return Number(self.eval())
 
     def to_cli(self):
         return str(self.eval()) + " (Number)"

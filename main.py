@@ -5,7 +5,7 @@ def main():
     context = Context.simple()
     while True:
         try:
-            text = raw_input('llama> ')
+            text = input('llama> ')
         except EOFError:
             break
         if not text:

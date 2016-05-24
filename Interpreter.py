@@ -4,6 +4,12 @@ from Expressions.Operations.Minus import Minus
 from Expressions.Operations.Times import Times
 from Expressions.Operations.Division import Division
 from Expressions.Operations.Function import Function
+from Expressions.Operations.Pow import Pow
+from Expressions.Operations.LogicalAnd import LogicalAnd
+from Expressions.Operations.LogicalOr import LogicalOr
+from Expressions.Operations.Equals import Equals
+from Expressions.Operations.NotEquals import NotEquals
+from Expressions.Bool import Bool
 from Expressions.Var import Var
 from Expressions.String import String
 from Expressions.Nil import Nil
@@ -157,7 +163,7 @@ class Interpreter(object):
     def parse_loop(self, current):
         if self.current_char.isspace():
             self.skip_whitespace()
-        if isinstance(current, Var) or isinstance(current, Number) or isinstance(current, String):
+        if isinstance(current, Var) or isinstance(current, Number) or isinstance(current, String) or isinstance(current, Bool):
             self.eat(current)
         elif isinstance(current, Function):
             self.eat(current)
@@ -171,6 +177,20 @@ class Interpreter(object):
                 op = self.ops.pop()
                 last = self.eaten.pop()
                 current = op(last, current)
+        elif self.advance_string("true"):
+            current = Bool(True)
+            if len(self.ops) > 0 and len(self.eaten) > 0:
+                op = self.ops.pop()
+                last = self.eaten.pop()
+                current = op(last, current)
+        elif self.advance_string("false"):
+            current = Bool(False)
+            if len(self.ops) > 0 and len(self.eaten) > 0:
+                op = self.ops.pop()
+                last = self.eaten.pop()
+                current = op(last, current)
+        elif self.advance_string("**"):
+            self.eatBinaryOp(Pow)
         elif self.advance_string("*"):
             self.eatBinaryOp(Times)
         elif self.advance_string("/"):
@@ -179,6 +199,14 @@ class Interpreter(object):
             self.eatBinaryOp(Plus)
         elif self.advance_string("-"):
             self.eatBinaryOp(Minus)
+        elif self.advance_string("&"):
+            self.eatBinaryOp(LogicalAnd)
+        elif self.advance_string("|"):
+            self.eatBinaryOp(LogicalOr)
+        elif self.advance_string("=="):
+            self.eatBinaryOp(Equals)
+        elif self.advance_string("!="):
+            self.eatBinaryOp(NotEquals)
         elif self.current_char == '(':
             current = self.brackets()
             popped = self.popBinaryOp(current)

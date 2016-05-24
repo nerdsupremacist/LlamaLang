@@ -18,3 +18,18 @@ class Number(Expr):
     @staticmethod
     def data():
         return "Number"
+
+class NaN(Expr):
+
+    def __init__(self):
+        return
+
+    def eval(self):
+        raise Exception("Forced calculation with NaN.")
+
+    def to_cli(self):
+        return "NaN"
+
+    @staticmethod
+    def data():
+        return "NaN"

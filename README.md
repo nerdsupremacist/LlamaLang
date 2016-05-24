@@ -8,18 +8,28 @@ So far it's really simple:
 
 * Number (float or int)
 * String
+* Bool
 * Function
 
 #### Define a variable:
 
 ```
-let var = "My Variable"
+let myString = "My String"
+let myNumber = 42
+let isLlamaAwesome = true
 ```
 
 #### Define a function
 
 ```
 let square = x -> x * x
+```
+
+so that:
+
+```
+square 25
+= 625 (Number)
 ```
 
 Functions are obviously First Class Citizens:

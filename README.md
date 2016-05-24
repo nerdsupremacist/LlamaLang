@@ -40,14 +40,17 @@ let square = x -> x * x
 so that:
 
 ```
-square 25
-= 625 (Number)
+square 25 // 625 (Number)
 ```
 
 Functions are obviously First Class Citizens:
 
 ```
 let redundant = f x -> f (f (f x))
+let yell = x -> x + "!"
+let hello = "Hello"
+
+redundant (yell) hello // "Hello!!!"
 ```
 
 #### Mathematical Operations Supported:

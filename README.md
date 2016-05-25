@@ -69,7 +69,7 @@ For instance take this small function to calculate the n Factorial:
 ```
 let fac = n ->
   if n = 0 then
-    0
+    1
   else
     n * (fac (n-1))
 ```
@@ -81,7 +81,11 @@ let fac = n ->
 It works great with tail recursion. For example if you want to calculate the n-th Result of the Fibonacci Sequence:
 
 ```
-let helper = n a b -> if n = 0 then b else helper (n-1) (a+b) a
+let helper = n a b ->
+  if n = 0 then
+    b 
+  else
+    helper (n-1) (a+b) a
 
 let fib = n -> helper n 1 0
 ```

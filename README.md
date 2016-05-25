@@ -81,9 +81,9 @@ let fac = n ->
 It works great with tail recursion. For example if you want to calculate the n-th Result of the Fibonacci Sequence:
 
 ```
-let tail = n a b -> if n = 0 then b else helper (n-1) (a+b) a
+let helper = n a b -> if n = 0 then b else helper (n-1) (a+b) a
 
-let fib = n -> tail n 1 0
+let fib = n -> helper n 1 0
 ```
 
 #### Mathematical Operations Supported:

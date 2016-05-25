@@ -22,6 +22,12 @@ class Array(Addressable):
             return self.items[0]
         return Nil()
 
+    def tail(self):
+        items = []
+        for i in range(1,self.items.length):
+            items.append(self.items[i].copy())
+        return Array(items)
+
     def to_cli(self):
         stringified = []
         for i in self.items:

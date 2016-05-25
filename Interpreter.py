@@ -18,6 +18,7 @@ from Expressions.Exception import ExceptionClass
 from Context import Context
 from Expressions.Control.If import IfThenElse
 from Expressions.Array import Array
+from Expressions.Dictionary import Dictionary
 
 class Interpreter(object):
 
@@ -85,10 +86,31 @@ class Interpreter(object):
             if bracket_count == 0:
                 self.advance()
                 items = result.split(",")
-                parsedItems = []
+                parsed_items = []
                 for i in items:
-                    parsedItems.append(Interpreter(self.context, i).parse())
-                return Array(parsedItems)
+                    parsed_items.append(Interpreter(self.context, i).parse())
+                return Array(parsed_items)
+            result += self.current_char
+            self.advance()
+        return Nil()
+
+    def dict(self):
+        result = ''
+        bracket_count = 1
+        self.advance()
+        while self.current_char is not None:
+            if self.current_char == "{":
+                bracket_count += 1
+            if self.current_char == "}":
+                bracket_count -= 1
+            if bracket_count == 0:
+                self.advance()
+                items = result.split(",")
+                parsed = {}
+                for i in items:
+                    item = i.replace(" ", "").split(":")
+                    parsed[item[0]] = Interpreter(self.context, item[1]).parse()
+                return Dictionary(parsed)
             result += self.current_char
             self.advance()
         return Nil()
@@ -268,11 +290,21 @@ class Interpreter(object):
                 current = popped.get(value.eval())
         elif self.current_char == '[':
             current = self.array()
+        elif self.current_char == '{':
+            current = self.dict()
         elif self.current_char == '(':
             current = self.brackets()
             popped = self.popBinaryOp(current)
             if not popped == None:
                 current = popped
+        elif self.current_char == '.':
+            self.advance()
+            if current.type() == Addressable:
+                item = self.var()
+                dict = current
+                if isinstance(dict, Var):
+                    dict = dict.get()
+                current = dict.get(item.name)
         elif self.current_char == '"':
             current = self.string()
             popped = self.popBinaryOp(current)

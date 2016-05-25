@@ -25,7 +25,7 @@ class Array(Addressable):
     def to_cli(self):
         stringified = []
         for i in self.items:
-            stringified.append(i.eval())
+            stringified.append(i.to_cli())
         return str(stringified) + " (Array)"
 
     @staticmethod

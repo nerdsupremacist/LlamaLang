@@ -17,13 +17,25 @@ So far it's really simple:
 * String
 * Bool
 * Function
+* Arrays (Any Type)
 
 #### Define a variable:
 
 ```
 let myString = "My String"
 let myNumber = 42
+let myArray = [42, 1337]
 let isLlamaAwesome = true
+```
+
+##### Arrays
+
+Important to note that arrays are not bound to specific datatypes.
+
+Meaning you could create an Array:
+
+```
+let myWeirdArray = [42, "Leet", true, [42, 1337], myOtherVar, myFunction]
 ```
 
 #### Write a Comment:
@@ -83,7 +95,7 @@ It works great with tail recursion. For example if you want to calculate the n-t
 ```
 let helper = n a b ->
   if n = 0 then
-    b 
+    b
   else
     helper (n-1) (a+b) a
 

@@ -1,3 +1,4 @@
+from Expressions.Addresable import Addressable
 from Expressions.Number import Number
 from Expressions.Operations.Plus import Plus
 from Expressions.Operations.Minus import Minus
@@ -16,6 +17,7 @@ from Expressions.Nil import Nil
 from Expressions.Exception import ExceptionClass
 from Context import Context
 from Expressions.Control.If import IfThenElse
+from Expressions.Array import Array
 
 class Interpreter(object):
 
@@ -71,14 +73,34 @@ class Interpreter(object):
         else:
             return None
 
+    def array(self):
+        result = ''
+        bracket_count = 1
+        self.advance()
+        while self.current_char is not None:
+            if self.current_char == "[":
+                bracket_count += 1
+            if self.current_char == "]":
+                bracket_count -= 1
+            if bracket_count == 0:
+                self.advance()
+                items = result.split(",")
+                parsedItems = []
+                for i in items:
+                    parsedItems.append(Interpreter(self.context, i).parse())
+                return Array(parsedItems)
+            result += self.current_char
+            self.advance()
+        return Nil()
+
     def brackets(self):
         result = ''
         bracket_count = 1
         self.advance()
         while self.current_char is not None:
-            if self.current_char == "(":
+            if self.current_char == "(" or self.current_char == '[':
                 bracket_count += 1
-            if self.current_char == ")":
+            if self.current_char == ")" or self.current_char == ']':
                 bracket_count -= 1
             if bracket_count == 0:
                 self.advance()
@@ -237,6 +259,15 @@ class Interpreter(object):
             self.eatBinaryOp(Equals)
         elif self.advance_string("!="):
             self.eatBinaryOp(NotEquals)
+        elif self.current_char == '[' and len(self.eaten) > 0 and self.eaten[0].type() == Addressable:
+            value = self.brackets()
+            popped = self.eaten.pop()
+            if popped is not None:
+                if isinstance(popped, Var):
+                    popped = popped.get()
+                current = popped.get(value.eval())
+        elif self.current_char == '[':
+            current = self.array()
         elif self.current_char == '(':
             current = self.brackets()
             popped = self.popBinaryOp(current)

@@ -7,7 +7,10 @@ class Array(Addressable):
         self.items = items
 
     def eval(self):
-        return self.items
+        items = []
+        for i in self.items:
+            items.append(i.eval())
+        return items
 
     def get(self, property):
         if property < len(self.items):
@@ -21,6 +24,12 @@ class Array(Addressable):
         if len(self.items) > 0:
             return self.items[0]
         return Nil()
+
+    def min(self):
+        new = []
+        for i in self.items:
+            new.append(i.min())
+        return Array(new)
 
     def tail(self):
         items = []

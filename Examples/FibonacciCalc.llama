@@ -1,6 +1,6 @@
 // This is a comment
 
-let fibonacciHelper = n a b -> if n = 0 then b else fibonacciHelper (n-1) (a+b) a
+let helper = n a b -> n = 0 ? b : helper (n-1) (a+b) a
 
 let fibonacci = n -> fibonacciHelper n 1 0
 

@@ -6,7 +6,6 @@ class Concatination(String):
         self.right = right
 
     def eval(self):
-        i = 0
         return str(self.left.eval()) + str(self.right.eval())
 
     def type(self):

@@ -12,5 +12,8 @@ class Division(Number):
         else:
             raise Exception('Invalid Input: Not Numbers')
 
+    def eval(self):
+        return Number(self.eval())
+
     def type(self):
         return Number

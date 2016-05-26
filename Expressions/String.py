@@ -1,4 +1,5 @@
 from Expressions.Expr import Expr
+import re
 class String(Expr):
 
     def __init__(self, text):
@@ -12,6 +13,9 @@ class String(Expr):
 
     def copy(self):
         return String(self.text)
+
+    def min(self):
+        return String(self.eval())
 
     def to_cli(self):
         return "\"" + self.eval() + "\"" + " (String)"

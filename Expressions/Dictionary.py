@@ -9,6 +9,12 @@ class Dictionary(Addressable):
     def eval(self):
         return self.dict
 
+    def min(self):
+        new = {}
+        for key in self.dict.keys():
+            new[key] = self.dict[key].min()
+        return Dictionary(new)
+
     def set(self, property, value):
         self.dict[property] = value
 

@@ -16,7 +16,7 @@ class Context(AbstractContext):
     def valueForVar(self, name):
         if name in self.types.keys():
             value = self.values[name]
-            return value.copy()
+            return value.min()
         else:
             return self.parent_context.valueForVar(name)
         
@@ -25,7 +25,7 @@ class Context(AbstractContext):
             raise Exception("Variable already set.")
         else:
             self.types[name] = ex.type()
-            self.values[name] = ex
+            self.values[name] = ex.min()
 
     def typeForVar(self, name):
         if name in self.types.keys():

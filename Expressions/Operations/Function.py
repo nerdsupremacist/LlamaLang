@@ -2,14 +2,21 @@ from Expressions.Var import Var
 from Expressions.Expr import Expr
 from Context import Context
 import Interpreter
+import re
 
 class Function(Expr):
 
     def __init__(self, parameters, context, code):
-        self.parameters = parameters
+        self.parameters = []
         self.context = Context(context)
-        self.code = code
+        self.code = code + " "
         self.applied = []
+        for i in range(len(parameters)):
+            self.parameters.append("__" + str(i))
+            pattern = re.compile("\W" + parameters[i] + "\W")
+            results = pattern.findall(self.code)
+            for res in results:
+                self.code = self.code.replace(res, res.replace(parameters[i], "__" + str(i)))
 
     def get_parent_context(self):
         return self.context.parent_context
@@ -17,7 +24,7 @@ class Function(Expr):
     def apply(self, params):
         self.applied = params
 
-    def eval(self):
+    def get(self):
         self.context = Context(self.get_parent_context())
         if len(self.parameters) != len(self.applied):
             raise Exception("Invalid Not All Parameters Applied.")
@@ -28,7 +35,15 @@ class Function(Expr):
                 self.context.setValueForVar(self.parameters[i], self.applied[i])
         inter = Interpreter.Interpreter(self.context, self.code)
         self.applied = []
-        return inter.parse().eval()
+        return inter.parse()
+
+    def eval(self):
+        return self.get().eval()
+
+    def min(self):
+        if len(self.applied) == len(self.parameters):
+            return self.get()
+        return self
 
     def type(self):
         if len(self.applied) > 0:
@@ -36,6 +51,7 @@ class Function(Expr):
         return Function
 
     def outputType(self):
+        return Expr
         try:
             interpreter = Interpreter.Interpreter(self.context, self.code)
             result = interpreter.parse()
@@ -57,5 +73,5 @@ class Function(Expr):
 
     def to_cli(self):
         if len(self.applied) > 0:
-            return str(self.eval())
+            return self.get().to_cli()
         return "Function " + str(self.parameters) + " -> " + self.outputType().data()

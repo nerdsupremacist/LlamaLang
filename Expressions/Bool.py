@@ -13,6 +13,9 @@ class Bool(Expr):
     def copy(self):
         return Bool(self.value)
 
+    def min(self):
+        return Bool(self.eval())
+
     def to_cli(self):
         if self.eval():
             return "true (Bool)"

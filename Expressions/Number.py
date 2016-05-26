@@ -18,6 +18,9 @@ class Number(Expr):
     def to_cli(self):
         return str(self.eval()) + " (Number)"
 
+    def min(self):
+        return Number(self.eval())
+
     @staticmethod
     def data():
         return "Number"

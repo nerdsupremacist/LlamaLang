@@ -15,6 +15,11 @@ class Var(Expr):
     def get(self):
         return self.context.valueForVar(self.name)
 
+    def min(self):
+        if self.type() is None:
+            return self
+        return self.get()
+
     def eval(self):
         return self.get().eval()
 

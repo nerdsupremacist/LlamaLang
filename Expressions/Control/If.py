@@ -14,6 +14,13 @@ class IfThenElse(Expr):
         else:
             return self.else_block.eval()
 
+    def min(self):
+        result_of_condition = self.condition.eval()
+        if result_of_condition:
+            return self.then_block.min()
+        else:
+            return self.else_block.min()
+
     def type(self):
         return self.then_block.type()
 

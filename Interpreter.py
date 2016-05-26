@@ -148,7 +148,7 @@ class Interpreter(object):
     def advance_string(self, str):
         for i in range(len(str)):
             char = str[i]
-            if self.current_char != char:
+            if self.current_char is None or self.current_char != char:
                 for j in range(i):
                     self.go_back()
                 return False
@@ -194,7 +194,7 @@ class Interpreter(object):
 
     def var(self):
         result = ''
-        while self.current_char is not None and self.current_char.isalpha():
+        while self.current_char is not None and (self.current_char.isalpha() or self.current_char == "_" or (result == '__'  and self.current_char.isdigit())):
             result += self.current_char
             self.advance()
         if len(result) > 0:
@@ -224,9 +224,9 @@ class Interpreter(object):
         while self.current_char is not None:
             else_block += self.current_char
             self.advance()
-        c = Interpreter(self.context, condition).parse()
-        t = Interpreter(Context(self.context), then_block).parse()
-        e = Interpreter(Context(self.context), else_block).parse()
+        c = Interpreter(self.context, condition).parseWithoutMin()
+        t = Interpreter(Context(self.context), then_block).parseWithoutMin()
+        e = Interpreter(Context(self.context), else_block).parseWithoutMin()
         return IfThenElse(c, t, e)
 
     def ite_question(self, condition):
@@ -247,8 +247,8 @@ class Interpreter(object):
         while self.current_char is not None:
             else_block += self.current_char
             self.advance()
-        t = Interpreter(Context(self.context), then_block).parse()
-        e = Interpreter(Context(self.context), else_block).parse()
+        t = Interpreter(Context(self.context), then_block).parseWithoutMin()
+        e = Interpreter(Context(self.context), else_block).parseWithoutMin()
         return IfThenElse(condition, t, e)
 
     def eat(self, item):
@@ -279,7 +279,8 @@ class Interpreter(object):
             self.advance()
         if self.current_char is None:
             return current
-        if isinstance(current, Var) or isinstance(current, Number) or isinstance(current, String) or isinstance(current, Bool):
+        if isinstance(current, Var) or isinstance(current, Number) or isinstance(current, String) \
+                or isinstance(current, Bool) or isinstance(current, Array) or isinstance(current, Dictionary):
             self.eat(current)
         elif isinstance(current, Function):
             self.eat(current)
@@ -366,6 +367,21 @@ class Interpreter(object):
                 current = popped
         return current
 
+    def parseWithoutMin(self):
+        current = Nil()
+        while self.current_char is not None:
+                current = self.parse_loop(current)
+        if len(self.funcs) > 0:
+            params = [current]
+            while len(self.eaten) > 0:
+                params.append(self.eaten.pop())
+            current = self.funcs.pop()
+            current.apply(params)
+            return current
+        if current.type() == Function:
+            return current
+        return current
+
     def parse(self):
         current = Nil()
         try:
@@ -373,14 +389,14 @@ class Interpreter(object):
                 current = self.parse_loop(current)
         except Exception as e:
             current = ExceptionClass(e)
-
         if len(self.funcs) > 0:
             params = [current]
             while len(self.eaten) > 0:
                 params.append(self.eaten.pop())
             current = self.funcs.pop()
             current.apply(params)
-        return current
+            return current.min()
+        return current.min()
 
     def result(self):
         item = self.parse()

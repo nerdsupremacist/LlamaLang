@@ -13,6 +13,9 @@ class Expr(object):
     def copy(self):
         return self
 
+    def min(self):
+        return self
+
     def to_cli(self):
         return self.eval()
 

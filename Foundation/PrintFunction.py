@@ -12,8 +12,11 @@ class Print(Function):
 
     def eval(self):
         if len(self.applied) == 1:
-            print(self.applied[0].eval())
+            print(str(self.applied[0].eval()))
         return Nil
+
+    def min(self):
+        return self
 
     def copy(self):
         return self

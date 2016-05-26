@@ -7,7 +7,7 @@ This is a Programming Language I'm defining since I wanted to try out Python and
 It's still a work in progress.
 For any cool ideas just make an issue and feel free to fork this project and work on it as you like.
 
-As soon as I'm done with the Interpreter I will probably get a few friends and write a full compiler.
+As soon as I'm done with the Interpreter I will probably get a few friends to help me write a full compiler.
 
 So far it's really simple:
 
@@ -77,12 +77,12 @@ Dictionaries, much like javascript Objects, store Data using String as Keys.
 To access data you can either use the bracket notation or the "." notation.
 
 ```
-let myDict = { 
-  answer: 42, 
-  info: 1337, 
-  sub: { 
-    hero: "Marty McFly" 
-  } 
+let myDict = {
+  answer: 42,
+  info: 1337,
+  sub: {
+    hero: "Marty McFly"
+  }
 }
 
 let answerOfTheUltimateQuestion = myDict.answer
@@ -140,6 +140,12 @@ let fac = n ->
     n * (fac (n-1))
 ```
 
+Or for those who like writing things short, there's the ? notation:
+
+```
+let fac = n -> n = 0 ? 1 : n * (fac (n-1))
+```
+
 *Note: Our Interpreter can only take one line at the time for now.*
 
 #### More Examples
@@ -190,8 +196,8 @@ a | b // true
 
 #### Standard Library
 
-The interpreter will inmediatly load our own functions into your code before running.
+The interpreter will immediately load our own functions into your code before running.
 Our standard functions include:
 
-* print (For Standart Output to the Console)
+* print (For Standard Output to the Console)
 * more coming

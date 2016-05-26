@@ -1,3 +1,4 @@
+import sys
 from Expressions.Addresable import Addressable
 from Expressions.Number import Number
 from Expressions.Operations.Plus import Plus
@@ -121,7 +122,7 @@ class Interpreter(object):
                 items = result.split(",")
                 parsed = {}
                 for i in items:
-                    item = i.replace(" ", "").split(":")
+                    item = i.replace(" ", "").split(":", 1)
                     parsed[item[0]] = Interpreter(self.context, item[1]).parse()
                 return Dictionary(parsed)
             result += self.current_char
@@ -205,12 +206,21 @@ class Interpreter(object):
         condition = ''
         then_block = ''
         else_block = ''
+        count = 1
         while not self.advance_string("then"):
             condition += self.current_char
             self.advance()
-        while not self.advance_string("else"):
-            then_block += self.current_char
-            self.advance()
+        while count > 0:
+            if self.advance_string("if"):
+                then_block += "if"
+                count += 1
+            elif self.advance_string("else"):
+                count -= 1
+                if count > 0:
+                    then_block += "else"
+            else:
+                then_block += self.current_char
+                self.advance()
         while self.current_char is not None:
             else_block += self.current_char
             self.advance()
@@ -219,6 +229,27 @@ class Interpreter(object):
         e = Interpreter(Context(self.context), else_block).parse()
         return IfThenElse(c, t, e)
 
+    def ite_question(self, condition):
+        then_block = ''
+        else_block = ''
+        count = 1
+        while count > 0:
+            if self.advance_string("?"):
+                then_block += "?"
+                count += 1
+            elif self.advance_string(":"):
+                count -= 1
+                if count > 0:
+                    then_block += ":"
+            else:
+                then_block += self.current_char
+                self.advance()
+        while self.current_char is not None:
+            else_block += self.current_char
+            self.advance()
+        t = Interpreter(Context(self.context), then_block).parse()
+        e = Interpreter(Context(self.context), else_block).parse()
+        return IfThenElse(condition, t, e)
 
     def eat(self, item):
         type = item.type()
@@ -279,6 +310,8 @@ class Interpreter(object):
             current = item
         elif self.advance_string("if"):
             current = self.ite()
+        elif self.advance_string("?"):
+            current = self.ite_question(current)
         elif self.advance_string("**"):
             self.eatBinaryOp(Pow)
         elif self.advance_string("*"):
@@ -354,4 +387,5 @@ class Interpreter(object):
         try:
             return item.to_cli()
         except Exception as e:
-            return ExceptionClass(e).to_cli()
+            sys.stderr.write(ExceptionClass(e).to_cli()+'\n')
+            return ""

@@ -64,12 +64,22 @@ class Interpreter(object):
             self.advance()
         return Nil
 
-    def integer(self):
+    def number(self):
         result = ''
+        isFloat = False
+        while self.current_char is not None and self.current_char.isdigit():
+            result += self.current_char
+            self.advance()
+        if self.current_char == '.':
+            isFloat = True
+            result += '.'
+            self.advance()
         while self.current_char is not None and self.current_char.isdigit():
             result += self.current_char
             self.advance()
         if len(result) > 0:
+            if isFloat:
+                return Number(float(result))
             return Number(int(result))
         else:
             return None
@@ -241,7 +251,7 @@ class Interpreter(object):
             if isinstance(item, Function):
                 current = item
         elif self.current_char.isdigit():
-            current = self.integer()
+            current = self.number()
             if len(self.ops) > 0 and len(self.eaten) > 0:
                 op = self.ops.pop()
                 last = self.eaten.pop()

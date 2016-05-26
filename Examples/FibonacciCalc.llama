@@ -1,7 +1,5 @@
 // This is a comment
 
-let x = ("Hello World" // Hello) + "!"
-
 let fibonacciHelper = n a b -> if n = 0 then b else fibonacciHelper (n-1) (a+b) a
 
 let fibonacci = n -> fibonacciHelper n 1 0

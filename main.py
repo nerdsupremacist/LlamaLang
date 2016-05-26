@@ -1,8 +1,9 @@
 from Interpreter import Interpreter
 from Context import Context
+from Foundation.FoundationContext import FoundationContext
 
 def main():
-    context = Context.simple()
+    context = Context(FoundationContext.simple())
     while True:
         try:
             text = raw_input('llama> ')
@@ -12,7 +13,8 @@ def main():
             continue
         inter = Interpreter(context, text)
         result = inter.result()
-        print(result)
+        if result is not None:
+            print(result)
 
 
 if __name__ == '__main__':

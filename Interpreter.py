@@ -27,7 +27,10 @@ class Interpreter(object):
         self.text = text
         self.pos = 0
         self.current_token = None
-        self.current_char = self.text[self.pos]
+        if len(text) > 0:
+            self.current_char = self.text[self.pos]
+        else:
+            self.current_char = None
         self.eaten = []
         self.ops = []
         self.funcs = []

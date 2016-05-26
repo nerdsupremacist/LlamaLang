@@ -1,0 +1,12 @@
+let fibonacciHelper = n a b -> if n = 0 then b else fibonacciHelper (n-1) (a+b) a
+
+let fibonacci = n -> fibonacciHelper n 1 0
+
+let message = "Hello World!"
+
+let result = fibonacci 10
+
+print message
+
+print "The tenth fibonacci Number is:"
+print result

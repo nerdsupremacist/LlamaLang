@@ -1,12 +1,16 @@
+// This is a comment
+
+let x = ("Hello World" // Hello) + "!"
+
 let fibonacciHelper = n a b -> if n = 0 then b else fibonacciHelper (n-1) (a+b) a
 
 let fibonacci = n -> fibonacciHelper n 1 0
 
-let message = "Hello World!"
+let message = "Hello World!" // You have to do a HelloWorld Program as some point
 
 let result = fibonacci 10
 
-print message
+print message // Comments do seem to be Working
 
 print "The tenth fibonacci Number is:"
 print result

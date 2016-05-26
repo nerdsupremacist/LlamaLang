@@ -243,6 +243,9 @@ class Interpreter(object):
     def parse_loop(self, current):
         if self.current_char.isspace():
             self.skip_whitespace()
+        if self.advance_string("//"):
+            self.pos = len(self.text)-1
+            self.advance()
         if self.current_char is None:
             return current
         if isinstance(current, Var) or isinstance(current, Number) or isinstance(current, String) or isinstance(current, Bool):

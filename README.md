@@ -11,6 +11,30 @@ As soon as I'm done with the Interpreter I will probably get a few friends and w
 
 So far it's really simple:
 
+## Run it
+
+This repository provides an Interpreter for the Language.
+If you want to use it you have to options
+
+### Run a file
+
+To run a file just type in your commandline:
+```bash
+./llama <filename>
+```
+
+### REPL
+
+You can also run the language in an interactive toplevel just type:
+
+```bash
+./llama
+```
+
+And the terminal will run it. Now you can enter your code line by line and get instant feedback :D
+
+## The Language
+
 ### Datatypes:
 
 * Number (float or int)
@@ -163,3 +187,11 @@ let b = false
 a & b // false
 a | b // true
 ```
+
+#### Standard Library
+
+The interpreter will inmediatly load our own functions into your code before running.
+Our standard functions include:
+
+* print (For Standart Output to the Console)
+* more coming

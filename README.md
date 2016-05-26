@@ -18,6 +18,7 @@ So far it's really simple:
 * Bool
 * Function
 * Arrays (Any Type)
+* Dictionaries
 
 #### Define a variable:
 
@@ -25,6 +26,7 @@ So far it's really simple:
 let myString = "My String"
 let myNumber = 42
 let myArray = [42, 1337]
+let myDict = { x: 42, y: 1337 }
 let isLlamaAwesome = true
 ```
 
@@ -37,6 +39,34 @@ Meaning you could create an Array:
 ```
 let myWeirdArray = [42, "Leet", true, [42, 1337], myOtherVar, myFunction]
 ```
+
+To get something from your array use the bracket notation:
+
+```
+let myArray = [42, 1337]
+let leet = myArray[1]
+```
+
+##### Dictionaries
+
+Dictionaries, much like javascript Objects, store Data using String as Keys.
+To access data you can either use the bracket notation or the "." notation.
+
+```
+let myDict = { 
+  answer: 42, 
+  info: 1337, 
+  sub: { 
+    hero: "Marty McFly" 
+  } 
+}
+
+let answerOfTheUltimateQuestion = myDict.answer
+// or
+let heroName = myDict["sub"]["hero"]
+```
+
+
 
 #### Write a Comment:
 

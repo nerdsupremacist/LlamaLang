@@ -384,11 +384,8 @@ class Interpreter(object):
 
     def parse(self):
         current = Nil()
-        try:
-            while self.current_char is not None:
-                current = self.parse_loop(current)
-        except Exception as e:
-            current = ExceptionClass(e)
+        while self.current_char is not None:
+            current = self.parse_loop(current)
         if len(self.funcs) > 0:
             params = [current]
             while len(self.eaten) > 0:

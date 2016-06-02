@@ -2,17 +2,21 @@
 // While Loop approach.
 // More generic by simulating a while loop though recursion
 
-let while = c f a -> c ? while ((f a)[1]) f ((f a)[0]) : (f a)[0]
+let while = c f a -> c ? while ((f a).condition) f ((f a).result) : (f a).result
 
-let newAccumulator = f a -> [f (a[0]) (a[1]), a[1] + 1, a[2]]
+let apply = f a -> f (a.accumulator) (a.current)
 
-let helper = f a -> [newAccumulator f a, (a[1]) != (a[2])]
+let next = f a -> { accumulator: apply f a, current: a.current + 1, last: a.last }
+
+let helper = f a -> {result: next f a, condition: (a.current) != (a.last) }
 
 let sum = x y -> x + y
 
-let myFunc = a -> helper sum a
+let myFun = a -> helper sum a
 
-let result = (while true myFunc [0, 1, 99])[0]
+let start = { accumulator: 0, current: 0, last: 99}
+
+let result = (while true myFun start).accumulator
 
 print "Summing all the numbers from one to 100:"
 print "By simulating a loop"

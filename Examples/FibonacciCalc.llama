@@ -2,7 +2,7 @@
 
 let helper = n a b -> n = 0 ? b : helper (n-1) (a+b) a
 
-let fibonacci = n -> fibonacciHelper n 1 0
+let fibonacci = n -> helper n 1 0
 
 let message = "Hello World!" // You have to do a HelloWorld Program as some point
 

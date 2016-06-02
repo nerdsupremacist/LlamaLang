@@ -1,4 +1,6 @@
 from Parser.ParsedResult import ParsedResult
+from Expressions.Nil import Nil
+from Expressions.Exception import ExceptionClass
 
 class Parser(object):
 
@@ -81,3 +83,12 @@ class Parser(object):
             if parsed is not None:
                 return parsed
         return None
+
+    def to_cli(self):
+        parsed = self.parse()
+        if parsed is None:
+            parsed = ParsedResult(Nil(), self.text)
+        try:
+            return parsed.parsedObject.to_cli()
+        except Exception as e:
+            return ExceptionClass(e).to_cli()

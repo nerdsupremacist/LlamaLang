@@ -7,13 +7,13 @@ def main():
     context = Context(FoundationContext.simple())
     while True:
         try:
-            text = input('llama.py> ')
+            text = raw_input('llama > ')
         except EOFError:
             break
         if not text:
             continue
         inter = StandardParser(text, context)
-        result = inter.parse().parsedObject.to_cli()
+        result = inter.to_cli()
         if result is not None:
             print(result)
 

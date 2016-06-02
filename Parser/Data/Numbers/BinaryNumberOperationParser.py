@@ -1,4 +1,4 @@
-from Parser.Numbers.AbstractNumberParser import AbstractNumberParser
+from Parser.Data.Numbers.AbstractNumberParser import AbstractNumberParser
 
 class BinaryNumberOperationParser(AbstractNumberParser):
 
@@ -14,13 +14,13 @@ class BinaryNumberOperationParser(AbstractNumberParser):
         return " "
 
     def parse_operation(self):
-        index = 0
+        index = len(self.text)
         result = None
         while result is None:
-            index = self.text.find(self.operation_string(), index)
+            index = self.text.rfind(self.operation_string(), 0, index)
             if index > 0:
-                left = self.text[:index - 1]
-                right = self.text[index + 1:]
+                left = self.text[:index]
+                right = self.text[index+len(self.operation_string()):]
                 right_parsed = AbstractNumberParser.default(right, self.context).parse()
                 left_parsed = AbstractNumberParser.default(left, self.context).parse()
                 if right_parsed is not None and left_parsed is not None:

@@ -1,12 +1,12 @@
-from Parser.Numbers.AbstractNumberParser import AbstractNumberParser
+from Parser.Data.Numbers.AbstractNumberParser import AbstractNumberParser
 from Expressions.Number import Number
 
-from Parser.VariableParser import VariableParser
-from Parser.Numbers.TimesParser import TimesParser
-from Parser.Numbers.DivisionParser import DivisionParser
-from Parser.Numbers.MinusParser import MinusParser
-from Parser.Numbers.PlusParser import PlusParser
-from Parser.Numbers.PowParser import PowParser
+from Parser.Data.VariableParser import VariableParser
+from Parser.Data.Numbers.TimesParser import TimesParser
+from Parser.Data.Numbers.DivisionParser import DivisionParser
+from Parser.Data.Numbers.MinusParser import MinusParser
+from Parser.Data.Numbers.PlusParser import PlusParser
+from Parser.Data.Numbers.PowParser import PowParser
 
 class NumberParser(AbstractNumberParser):
 
@@ -22,6 +22,9 @@ class NumberParser(AbstractNumberParser):
     def parse_number(self):
         result = ''
         is_float = False
+        if self.current_char == "-":
+            result += self.current_char
+            self.advance()
         while self.current_char is not None and self.current_char.isdigit():
             result += self.current_char
             self.advance()

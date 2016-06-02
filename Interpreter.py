@@ -190,7 +190,7 @@ class Interpreter(object):
                 params.append(item.name)
             else:
                 break
-        return Function(params, self.context, result)
+        return Function(params, self.context, result, True)
 
     def var(self):
         result = ''

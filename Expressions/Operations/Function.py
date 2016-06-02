@@ -6,17 +6,20 @@ import re
 
 class Function(Expr):
 
-    def __init__(self, parameters, context, code):
+    def __init__(self, parameters, context, code, change_code):
         self.parameters = []
         self.context = Context(context)
         self.code = code + " "
         self.applied = []
-        for i in range(len(parameters)):
-            self.parameters.append("__" + str(i))
-            pattern = re.compile("\W" + parameters[i] + "\W")
-            results = pattern.findall(self.code)
-            for res in results:
-                self.code = self.code.replace(res, res.replace(parameters[i], "__" + str(i)))
+        if change_code:
+            for i in range(len(parameters)):
+                self.parameters.append("__" + str(i))
+                pattern = re.compile("\W" + parameters[i] + "\W")
+                results = pattern.findall(self.code)
+                for res in results:
+                    self.code = self.code.replace(res, res.replace(parameters[i], "__" + str(i)))
+        else:
+            self.parameters = parameters
 
     def get_parent_context(self):
         return self.context.parent_context
@@ -26,13 +29,15 @@ class Function(Expr):
 
     def get(self):
         self.context = Context(self.get_parent_context())
-        if len(self.parameters) != len(self.applied):
+        if len(self.parameters) < len(self.applied):
             raise Exception("Invalid Not All Parameters Applied.")
-        for i in range(len(self.parameters)):
+        for i in range(len(self.applied)):
             if isinstance(self.applied[i], Var):
                 self.context.setValueForVar(self.parameters[i], self.applied[i].get())
             else:
                 self.context.setValueForVar(self.parameters[i], self.applied[i])
+        if len(self.parameters) != len(self.applied):
+            result = Function(self.parameters[len(self.applied):], self.context, self.code, False)
         inter = Interpreter.Interpreter(self.context, self.code)
         self.applied = []
         return inter.parse()

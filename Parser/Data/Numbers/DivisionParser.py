@@ -1,4 +1,4 @@
-from Parser.Numbers.BinaryNumberOperationParser import BinaryNumberOperationParser
+from Parser.Data.Numbers.BinaryNumberOperationParser import BinaryNumberOperationParser
 from Expressions.Operations.Division import Division
 
 class DivisionParser(BinaryNumberOperationParser):

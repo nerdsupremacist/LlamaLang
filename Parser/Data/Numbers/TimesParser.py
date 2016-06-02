@@ -1,4 +1,4 @@
-from Parser.Numbers.BinaryNumberOperationParser import BinaryNumberOperationParser
+from Parser.Data.Numbers.BinaryNumberOperationParser import BinaryNumberOperationParser
 from Expressions.Operations.Times import Times
 
 class TimesParser(BinaryNumberOperationParser):

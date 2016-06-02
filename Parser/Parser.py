@@ -27,7 +27,10 @@ class Parser(object):
 
     def start_over(self):
         self.pos = 0
-        self.current_char = self.text[self.pos]
+        if len(self.text) > 0:
+            self.current_char = self.text[self.pos]
+        else:
+            self.current_char = None
 
     def go_back(self):
         self.pos -= 1
@@ -52,7 +55,6 @@ class Parser(object):
 
     def parse_brackets(self):
         if self.current_char == '(':
-            self.advance()
             result = ''
             bracket_count = 1
             self.advance()
@@ -63,13 +65,17 @@ class Parser(object):
                     bracket_count -= 1
                 if bracket_count == 0:
                     self.advance()
-                    return self.parser_default()(result, self.context)
+                    sub_parser = self.parser_default()(result, self.context)
+                    parsed = sub_parser.parse()
+                    if parsed is None:
+                        return None
+                    return parsed.parsedObject
                 result += self.current_char
                 self.advance()
         return None
 
     def parse(self):
-        self.skip_whitespace()
+        self.start_over()
         for f in self.internal:
             self.skip_whitespace()
             parsed = f()

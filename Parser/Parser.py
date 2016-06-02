@@ -32,6 +32,10 @@ class Parser(object):
         else:
             self.current_char = None
 
+    def finish(self):
+        self.pos = len(self.text)
+        self.current_char = None
+
     def go_back(self):
         self.pos -= 1
         if self.pos < 0:
@@ -39,15 +43,22 @@ class Parser(object):
         else:
             self.current_char = self.text[self.pos]
 
-    def advance_string(self, str):
-        for i in range(len(str)):
-            char = str[i]
+    def advance_string(self, string):
+        for i in range(len(string)):
+            char = string[i]
             if self.current_char is None or self.current_char != char:
                 for j in range(i):
                     self.go_back()
                 return False
             self.advance()
         return True
+
+    def advance_until(self, string):
+        res = ''
+        while not self.advance_string(string):
+            res += self.current_char
+            self.advance()
+        return res
 
     def skip_whitespace(self):
         while self.current_char is not None and self.current_char.isspace():

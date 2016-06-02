@@ -2,9 +2,9 @@ import re
 
 # Magic regular expressions
 
-number_expression = "(([ ]*([-]?)(([0-9]+([.][0-9]+)?))[ ]*))"
+number_expression = "((([-]?)(([0-9]+([.][0-9]+)?))))"
 
-item_expression = "(([(].*[)])|" + number_expression + ")"
+item_expression = "([ ]*(([(].*[)])|" + number_expression + "|[a-zA-Z]|[$][0-9]+)[ ]*)"
 
 class PrecedenceManager(object):
 

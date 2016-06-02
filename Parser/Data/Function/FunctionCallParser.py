@@ -1,6 +1,7 @@
 from Parser.Parser import Parser
-from Parser.Data.VariableParser import VariableParser
 from Expressions.Operations.Function import Function
+from Expressions.Var import Var
+import re
 
 class FunctionCallParser(Parser):
 
@@ -9,17 +10,22 @@ class FunctionCallParser(Parser):
         self.internal += [self.parse_call]
 
     def parse_call(self):
-        vars_as_string_array = self.text.split("[ ]+")
-        vars_as_array = []
-        for var_as_string in vars_as_string_array:
-            parser = VariableParser(self.text, self.context)
+        pattern = re.compile("[ ]+")
+        expressions_as_string_array = pattern.split(self.text)
+        expressions_as_array = []
+        for expression_as_string in expressions_as_string_array:
+            from Parser.StandardParser import StandardParser
+            parser = StandardParser(expression_as_string, self.context)
             parsed = parser.parse()
             if parsed is None:
                 return None
-            vars_as_array.append(parsed.parsedObject)
-        if len(vars_as_array) > 0 and vars_as_array[0].type() == Function:
-            func = vars_as_array[0]
-            params = vars_as_array[1:]
+            expressions_as_array.append(parsed.parsedObject)
+        if len(expressions_as_array) > 0 and expressions_as_array[0].type() == Function:
+            func = expressions_as_array[0]
+            params = expressions_as_array[1:]
+            if isinstance(func, Var):
+                func = func.get()
             func.apply(params)
+            self.finish()
             return func.min()
         return None

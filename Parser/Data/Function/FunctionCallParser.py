@@ -19,7 +19,7 @@ class FunctionCallParser(Parser):
             parsed = parser.parse()
             if parsed is None:
                 return None
-            expressions_as_array.append(parsed.parsedObject)
+            expressions_as_array.append(parsed)
         if len(expressions_as_array) > 0 and expressions_as_array[0].type() == Function:
             func = expressions_as_array[0]
             params = expressions_as_array[1:]

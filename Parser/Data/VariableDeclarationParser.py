@@ -18,8 +18,6 @@ class VariableDeclarationParser(Parser):
             self.finish()
             if parsed_var is None or parsed_remaining is None:
                 return None
-            parsed_var = parsed_var.parsedObject
-            parsed_remaining = parsed_remaining.parsedObject
             parsed_var.set(parsed_remaining)
             return parsed_var
         else:

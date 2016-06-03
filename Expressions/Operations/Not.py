@@ -8,7 +8,7 @@ class Not(Bool):
         if self.value.type() == Bool:
             return not self.value.eval()
         else:
-            raise Exception('Invalid Input: Not Boolean')
+            raise Exception('Invalid Input: Not Bool')
 
     def type(self):
         return Bool

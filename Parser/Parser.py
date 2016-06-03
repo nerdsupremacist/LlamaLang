@@ -1,4 +1,3 @@
-from Parser.ParsedResult import ParsedResult
 from Expressions.Nil import Nil
 from Expressions.Exception import ExceptionClass
 
@@ -55,7 +54,7 @@ class Parser(object):
 
     def advance_until(self, string):
         res = ''
-        while not self.advance_string(string):
+        while not self.advance_string(string) and self.current_char is not None:
             res += self.current_char
             self.advance()
         return res
@@ -80,7 +79,7 @@ class Parser(object):
                     parsed = sub_parser.parse()
                     if parsed is None:
                         return None
-                    return parsed.parsedObject
+                    return parsed
                 result += self.current_char
                 self.advance()
         return None
@@ -92,7 +91,7 @@ class Parser(object):
             parsed = f()
             self.skip_whitespace()
             if parsed is not None and self.current_char is None:
-                return ParsedResult(parsed, self.text[self.pos:])
+                return parsed
             else:
                 self.start_over()
         for sub in self.sub_parsers:
@@ -104,8 +103,8 @@ class Parser(object):
     def to_cli(self):
         parsed = self.parse()
         if parsed is None:
-            parsed = ParsedResult(Nil(), self.text)
+            parsed = Nil()
         try:
-            return parsed.parsedObject.to_cli()
+            return parsed.to_cli()
         except Exception as e:
             return ExceptionClass(e).to_cli()

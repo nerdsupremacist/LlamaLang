@@ -20,4 +20,4 @@ class FunctionDeclarationParser(Parser):
                     return None
             code = self.text[index+2:]
             self.finish()
-            return Function(vars_as_array, self.context, code, True)
+            return Function(vars_as_array, self.context, code, False)

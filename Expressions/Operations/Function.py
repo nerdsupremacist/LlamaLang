@@ -1,5 +1,6 @@
 from Expressions.Var import Var
 from Expressions.Expr import Expr
+from Expressions.Nil import Nil
 from Context import Context
 import Interpreter
 import re
@@ -38,9 +39,16 @@ class Function(Expr):
                 self.context.setValueForVar(self.parameters[i], self.applied[i])
         if len(self.parameters) != len(self.applied):
             result = Function(self.parameters[len(self.applied):], self.context, self.code, False)
-        inter = Interpreter.Interpreter(self.context, self.code)
+
+        from Parser.StandardParser import StandardParser
+        parser = StandardParser(self.code, self.context)
+        parsed = parser.parse()
+        if parsed is None:
+            return Nil()
+        #inter = Interpreter.Interpreter(self.context, self.code)
         self.applied = []
-        return inter.parse()
+        #return inter.parse()
+        return parsed
 
     def eval(self):
         return self.get().eval()
@@ -57,15 +65,6 @@ class Function(Expr):
 
     def outputType(self):
         return Expr
-        try:
-            interpreter = Interpreter.Interpreter(self.context, self.code)
-            result = interpreter.parse()
-            type = result.type()
-            if type == None:
-                return Expr
-            return type
-        except Exception as e:
-            return Expr
 
     @staticmethod
     def data():

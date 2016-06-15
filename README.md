@@ -4,6 +4,10 @@
 Repository for the Llama Programming Language.
 This is a Programming Language I'm defining since I wanted to try out Python and always wanted to make one. ;)
 
+The name is actually an Acronym:
+
+The **L**lama **L**anguage is **A**wesome, **M**an. **A**wesome
+
 It's still a work in progress.
 For any cool ideas just make an issue and feel free to fork this project and work on it as you like.
 

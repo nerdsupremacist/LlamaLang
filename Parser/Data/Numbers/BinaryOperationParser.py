@@ -27,8 +27,7 @@ class BinaryOperationParser(Parser):
                 left_parsed = self.default(left, self.context).parse()
                 if right_parsed is not None and left_parsed is not None:
                     result = self.create(left_parsed, right_parsed)
-                    self.pos = len(self.text)
-                    self.advance()
+                    self.finish()
             if index < 0:
                 break
         return result

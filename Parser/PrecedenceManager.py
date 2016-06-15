@@ -4,7 +4,7 @@ import re
 
 number_expression = "((([-]?)(([0-9]+([.][0-9]+)?))))"
 
-item_expression = "([ ]*(([(].*[)])|" + number_expression + "|[a-zA-Z]|[$][0-9]+)[ ]*)"
+item_expression = "([ ]*(([(].*[)])|" + number_expression + "|[a-zA-Z]|[_][_][0-9]+)[ ]*)"
 
 class PrecedenceManager(object):
 

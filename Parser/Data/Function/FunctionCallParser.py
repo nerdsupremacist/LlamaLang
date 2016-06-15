@@ -12,6 +12,8 @@ class FunctionCallParser(Parser):
     def parse_call(self):
         pattern = re.compile("[ ]+")
         expressions_as_string_array = pattern.split(self.text)
+        while "" in expressions_as_string_array:
+            expressions_as_string_array.remove("")
         expressions_as_array = []
         if len(expressions_as_string_array) > 1:
             for expression_as_string in expressions_as_string_array:

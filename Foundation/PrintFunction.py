@@ -15,6 +15,9 @@ class Print(Function):
             print(str(self.applied[0].eval()))
         return Nil
 
+    def get(self):
+        return self
+
     def min(self):
         return self
 

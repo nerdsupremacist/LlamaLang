@@ -12,7 +12,7 @@ class Division(Number):
         else:
             raise Exception('Invalid Input: Not Numbers')
 
-    def eval(self):
+    def min(self):
         return Number(self.eval())
 
     def type(self):

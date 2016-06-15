@@ -45,9 +45,7 @@ class Function(Expr):
         parsed = parser.parse()
         if parsed is None:
             return Nil()
-        #inter = Interpreter.Interpreter(self.context, self.code)
         self.applied = []
-        #return inter.parse()
         return parsed
 
     def eval(self):

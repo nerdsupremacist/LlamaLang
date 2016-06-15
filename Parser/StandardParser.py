@@ -14,8 +14,10 @@ class StandardParser(Parser):
         text = PrecedenceManager.prepare_precedence(text)
         super(StandardParser, self).__init__(text, context)
         self.internal = []
-        self.sub_parsers += [VariableDeclarationParser, BoolParser, NumberParser, StringParser, VariableParser]
-        self.sub_parsers += [FunctionDeclarationParser, FunctionCallParser]
+        from Parser.Data.Function.IfThenElseParser import IfThenElseParser
+        self.sub_parsers += [VariableDeclarationParser, FunctionDeclarationParser, IfThenElseParser]
+        self.sub_parsers += [BoolParser, NumberParser, StringParser, VariableParser]
+        self.sub_parsers += [FunctionCallParser]
 
     def parser_default(self):
         return StandardParser

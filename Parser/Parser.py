@@ -85,6 +85,8 @@ class Parser(object):
         return None
 
     def parse(self):
+        if self.text == "":
+            return None
         self.start_over()
         for f in self.internal:
             self.skip_whitespace()

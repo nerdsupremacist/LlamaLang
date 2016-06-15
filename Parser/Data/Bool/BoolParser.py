@@ -11,7 +11,11 @@ class BoolParser(Parser):
     def __init__(self, text, context):
         super(BoolParser, self).__init__(text, context)
         self.internal += [self.parse_true, self.parse_false]
-        self.sub_parsers += [EqualsParser, NotEqualsParser, AndParser, OrParser, VariableParser]
+        from Parser.Data.Bool.NotParser import NotParser
+        self.sub_parsers += [NotParser, EqualsParser, NotEqualsParser, AndParser, OrParser, VariableParser]
+
+    def parser_default(self):
+        return BoolParser
 
     def parse_true(self):
         if self.advance_string("true"):

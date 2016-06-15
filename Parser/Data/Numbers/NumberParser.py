@@ -7,6 +7,7 @@ from Parser.Data.Numbers.DivisionParser import DivisionParser
 from Parser.Data.Numbers.MinusParser import MinusParser
 from Parser.Data.Numbers.PlusParser import PlusParser
 from Parser.Data.Numbers.PowParser import PowParser
+from Parser.Data.Function.FunctionCallParser import FunctionCallParser
 
 class NumberParser(AbstractNumberParser):
 
@@ -14,7 +15,8 @@ class NumberParser(AbstractNumberParser):
         super(NumberParser, self).__init__(text, context)
         AbstractNumberParser.set_parser(NumberParser)
         self.internal += [self.parse_number]
-        self.sub_parsers = [PowParser, DivisionParser, TimesParser, PlusParser, MinusParser, VariableParser]
+        self.sub_parsers = [PowParser, DivisionParser, TimesParser, PlusParser, MinusParser]
+        self.sub_parsers += [VariableParser, FunctionCallParser]
 
     def parser_default(self):
         return NumberParser

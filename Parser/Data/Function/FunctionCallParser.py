@@ -13,19 +13,20 @@ class FunctionCallParser(Parser):
         pattern = re.compile("[ ]+")
         expressions_as_string_array = pattern.split(self.text)
         expressions_as_array = []
-        for expression_as_string in expressions_as_string_array:
-            from Parser.StandardParser import StandardParser
-            parser = StandardParser(expression_as_string, self.context)
-            parsed = parser.parse()
-            if parsed is None:
-                return None
-            expressions_as_array.append(parsed)
-        if len(expressions_as_array) > 0 and expressions_as_array[0].type() == Function:
-            func = expressions_as_array[0]
-            params = expressions_as_array[1:]
-            if isinstance(func, Var):
-                func = func.get()
-            func.apply(params)
-            self.finish()
-            return func.min()
+        if len(expressions_as_string_array) > 1:
+            for expression_as_string in expressions_as_string_array:
+                from Parser.StandardParser import StandardParser
+                parser = StandardParser(expression_as_string, self.context)
+                parsed = parser.parse()
+                if parsed is None:
+                    return None
+                expressions_as_array.append(parsed)
+            if len(expressions_as_array) > 0 and expressions_as_array[0].type() == Function:
+                func = expressions_as_array[0]
+                params = expressions_as_array[1:]
+                if isinstance(func, Var):
+                    func = func.get()
+                func.apply(params)
+                self.finish()
+                return func.get()
         return None

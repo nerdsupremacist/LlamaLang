@@ -2,7 +2,6 @@ from Expressions.Var import Var
 from Expressions.Expr import Expr
 from Expressions.Nil import Nil
 from Context import Context
-import Interpreter
 import re
 
 class Function(Expr):

@@ -1,4 +1,3 @@
-from Interpreter import Interpreter
 from Context import Context
 from Foundation.FoundationContext import FoundationContext
 from Parser.StandardParser import StandardParser

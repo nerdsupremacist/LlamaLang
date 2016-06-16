@@ -16,6 +16,6 @@ if len(sys.argv) >= 2:
         parser = StandardParser(line, context)
         parsed = parser.parse()
         if parsed is not None:
-            result = parsed.eval()
+            result = parsed.to_cli()
 else:
     main()

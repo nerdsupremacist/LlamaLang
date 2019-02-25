@@ -1,5 +1,5 @@
 //
-//  VoidParser.swift
+//  Protocol.swift
 //  Llama
 //
 //  Created by Mathias Quintero on 24.02.19.
@@ -8,5 +8,6 @@
 
 import Foundation
 
-// ()
-let voidParser = TokenParser(token: .openParenthesis) && .closeParenthesis
+protocol Parsable {
+    static var parser: AnyParser<Self> { get }
+}

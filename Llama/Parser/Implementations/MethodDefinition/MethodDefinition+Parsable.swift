@@ -12,7 +12,6 @@ extension MethodDefinition: Parsable {
     
     // [Target].[Identifier][Generics]?[FunctionSignature] = [FunctionBody]
     static let parser: AnyParser<MethodDefinition> = {
-        // TODO: Deal with generics added to type identifier
         let parser = MethodDefinition.Target.self &&
             .dot &&
             IdentifierParser() &&

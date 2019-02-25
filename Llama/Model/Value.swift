@@ -9,8 +9,6 @@
 import Foundation
 
 indirect enum Value {
-    // TODO: Add method call
-    
     struct Operation {
         let `operator`: String
         let lhs: Value

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "SingleTokenParser.parse(tokens:):SingleTokenParser.swift">
+      </ContextState>
+      <ContextState
+         contextName = "AndParser.parse(tokens:):AndParser.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "firstOutput.remaining[0]">
+            </PersistentString>
+            <PersistentString
+               value = "A.Output.self">
+            </PersistentString>
+            <PersistentString
+               value = "firstOutput.output">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MappedParser.parse(tokens:):Parser+Map.swift">
+      </ContextState>
+      <ContextState
+         contextName = "AnyParser.parse(tokens:):AnyParser.swift">
+      </ContextState>
+      <ContextState
+         contextName = "AppDelegate.application(_:didFinishLaunchingWithOptions:):AppDelegate.swift">
+      </ContextState>
+      <ContextState
+         contextName = "TokenParser.parse(token:):TokenParser.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Parsable.init(tokens:):Protocol.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

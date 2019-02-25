@@ -1,4 +1,0 @@
-// Small Hello World Example
-
-let message = "Hello World"
-print message
